@@ -383,6 +383,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
+            case R.id.menu1:
+                MenuFragment menuFragment = new MenuFragment();
+                FragmentManager mFragmentManager = getSupportFragmentManager();
+                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.fragment_container, menuFragment);
+                mFragmentTransaction.addToBackStack(null);
+                mFragmentTransaction.commit();
+
+                return true;
             case R.id.menu2:
                 Intent i = new Intent(this,MenuActivity1.class);
                 startActivity(i);

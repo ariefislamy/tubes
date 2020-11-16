@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyTubs</string>
     <string name="menu_1">menu1</string>
-    <string name="menu_2">history</string>
+    <string name="menu_2">Konversi suhu</string>
     <string name="ln">ln</string>
     <string name="x">xⁿ</string>
     <string name="akar">√</string>
@@ -21,7 +21,6 @@
     <string name="_1">1</string>
     <string name="_2">2</string>
     <string name="_3">3</string>
-    <string name="_0">0</string>
     <string name="kali">×</string>
     <string name="titik">.</string>
     <string name="bagi">÷</string>
@@ -29,4 +28,20 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_history">hello_history</string>
+    <string name="_0">0</string>
+    <string name="log">log</string>
+    <string-array name="suhu">
+        <item>Celcius ---> Reamur</item>
+        <item>Celcius ---> Fahrenheit</item>
+        <item>Celcius ---> Kelvin</item>
+        <item>Reamur ---> Celcius</item>
+        <item>Reamur ---> Fahrenheit</item>
+        <item>Reamur ---> Kelvin</item>
+        <item>Fahrenheit ---> Celcius</item>
+        <item>Fahrenheit ---> Reamur</item>
+        <item>Fahrenheit ---> Kelvin</item>
+        <item>Kelvin ---> Celcius</item>
+        <item>Kelvin ---> Reamur</item>
+        <item>Kelvin ---> Fahrenheit</item>
+    </string-array>
 </resources>
