@@ -22,11 +22,14 @@
     <string name="_2">2</string>
     <string name="_3">3</string>
     <string name="kali">×</string>
-    <string name="_0">0</string>
     <string name="titik">.</string>
     <string name="bagi">÷</string>
     <string name="samadengan">=</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_history">hello_history</string>
+    <string name="_0">0</string>
+    <string name="log">log</string>
+    <string name="ln">ln</string>
+    <string name="x">xⁿ</string>
 </resources>
