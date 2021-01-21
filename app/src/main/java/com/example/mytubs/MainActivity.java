@@ -1,378 +1,486 @@
 package com.example.mytubs;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 
 public class MainActivity extends AppCompatActivity {
-    TextView input, signBox, input2;
-
-    String sign, value1, value2;
-    Double num1, num2, result;
-    float result1;
-    boolean hasDot;
+    private EditText e1,e2;
+    private int count=0;
+    private String expression="";
+    private String text="";
+    private Double result=0.0;
+    private DBHelper dbHelper;
+    private Button mode,toggle,square,xpowy,log,sin,cos,tan,sqrt,fact;
+    private int toggleMode=1;
+    private int angleMode=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_cal_scientific);
+        e1 = (EditText) findViewById(R.id.editText);
+        e2 = (EditText) findViewById(R.id.editText2);
+        mode = (Button) findViewById(R.id.mode);
+        toggle = (Button) findViewById(R.id.toggle);
+        square = (Button) findViewById(R.id.square);
+        xpowy = (Button) findViewById(R.id.xpowy);
+        log = (Button) findViewById(R.id.log);
+        sin = (Button) findViewById(R.id.sin);
+        cos = (Button) findViewById(R.id.cos);
+        tan = (Button) findViewById(R.id.tan);
+        sqrt= (Button) findViewById(R.id.sqrt);
+        fact = (Button) findViewById(R.id.factorial);
 
-        input = (TextView) findViewById(R.id.input);
-        input2 = (TextView) findViewById(R.id.input);
-        signBox = (TextView) findViewById(R.id.sign);
+        dbHelper=new DBHelper(this);
 
-        hasDot = false;
+        e2.setText("0");
+
+        //tags to change the mode from degree to radian and vice versa
+        mode.setTag(1);
+        //tags to change the names of the buttons performing different operations
+        toggle.setTag(1);
     }
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_0(View view) {
-        input.setText(input.getText() + "0");
-    }
+    public void onClick(View v)
+    {
+        toggleMode=(int)toggle.getTag();
+        angleMode=((int)mode.getTag());
+        switch (v.getId()) {
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_1(View view) {
-        input.setText(input.getText() + "1");
-    }
+            case R.id.toggle:
+                //change the button text if switch button is clicked
+                if(toggleMode==1)
+                {
+                    toggle.setTag(2);
+                    square.setText(R.string.cube);
+                    xpowy.setText(R.string.tenpow);
+                    log.setText(R.string.naturalLog);
+                    sin.setText(R.string.sininv);
+                    cos.setText(R.string.cosinv);
+                    tan.setText(R.string.taninv);
+                    sqrt.setText(R.string.cuberoot);
+                    fact.setText(R.string.Mod);
+                }
+                else if(toggleMode==2)
+                {
+                    toggle.setTag(3);
+                    square.setText(R.string.square);
+                    xpowy.setText(R.string.epown);
+                    log.setText(R.string.log);
+                    sin.setText(R.string.hyperbolicSine);
+                    cos.setText(R.string.hyperbolicCosine);
+                    tan.setText(R.string.hyperbolicTan);
+                    sqrt.setText(R.string.inverse);
+                    fact.setText(R.string.factorial);
+                }
+                else if(toggleMode==3)
+                {
+                    toggle.setTag(1);
+                    sin.setText(R.string.sin);
+                    cos.setText(R.string.cos);
+                    tan.setText(R.string.tan);
+                    sqrt.setText(R.string.sqrt);
+                    xpowy.setText(R.string.xpown);
+                }
+                break;
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_2(View view) {
-        input.setText(input.getText() + "2");
-    }
+            case R.id.mode:
+                //change the angle property for trignometric operations if mode button is clicked
+                if(angleMode==1)
+                {
+                    mode.setTag(2);
+                    mode.setText(R.string.mode2);
+                }
+                else
+                {
+                    mode.setTag(1);
+                    mode.setText(R.string.mode1);
+                }
+                break;
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_3(View view) {
-        input.setText(input.getText() + "3");
-    }
+            case R.id.num0:
+                e2.setText(e2.getText() + "0");
+                break;
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_4(View view) {
-        input.setText(input.getText() + "4");
-    }
+            case R.id.num1:
+                e2.setText(e2.getText() + "1");
+                break;
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_5(View view) {
-        input.setText(input.getText() + "5");
-    }
+            case R.id.num2:
+                e2.setText(e2.getText() + "2");
+                break;
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_6(View view) {
-        input.setText(input.getText() + "6");
-    }
+            case R.id.num3:
+                e2.setText(e2.getText() + "3");
+                break;
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_7(View view) {
-        input.setText(input.getText() + "7");
-    }
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_8(View view) {
-        input.setText(input.getText() + "8");
-    }
+            case R.id.num4:
+                e2.setText(e2.getText() + "4");
+                break;
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_9(View view) {
-        input.setText(input.getText() + "9");
-    }
+            case R.id.num5:
+                e2.setText(e2.getText() + "5");
+                break;
 
-    @SuppressLint("SetTextI18n")
-    public void btnClick_dot(View view) {
-        if (!hasDot) {
-            if (input.getText().equals("")) {
+            case R.id.num6:
+                e2.setText(e2.getText() + "6");
+                break;
 
-                input.setText("0.");
-            } else {
+            case R.id.num7:
+                e2.setText(e2.getText() + "7");
+                break;
 
-                input.setText(input.getText() + ".");
-            }
+            case R.id.num8:
+                e2.setText(e2.getText() + "8");
+                break;
 
-            hasDot = true;
-        }
+            case R.id.num9:
+                e2.setText(e2.getText() + "9");
+                break;
 
-    }
+            case R.id.pi:
+                e2.setText(e2.getText() + "pi");
+                break;
 
-    public void btnClick_add(View view) {
-        sign = "+";
-        value1 = input.getText().toString();
-        input.setText(null);
-        signBox.setText("+");
-        hasDot = false;
-    }
+            case R.id.dot:
+                if (count == 0 && e2.length() != 0) {
+                    e2.setText(e2.getText() + ".");
+                    count++;
+                }
+                break;
 
-    public void btnClick_subtract(View view) {
-        sign = "-";
-        value1 = input.getText().toString();
-        input.setText(null);
-        signBox.setText("-");
-        hasDot = false;
-    }
+            case R.id.clear:
+                e1.setText("");
+                e2.setText("");
+                count = 0;
+                expression = "";
+                break;
 
-    public void btnClick_multiply(View view) {
-        sign = "*";
-        value1 = input.getText().toString();
-        input.setText(null);
-        signBox.setText("×");
-        hasDot = false;
-    }
-
-    public void btnClick_divide(View view) {
-        sign = "/";
-        value1 = input.getText().toString();
-        input.setText(null);
-        signBox.setText("÷");
-        hasDot = false;
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void btnClick_log(View view) {
-        sign = "log";
-        input.setText(null);
-        signBox.setText("log");
-        hasDot = false;
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void btnClick_ln(View view) {
-        sign = "ln";
-        input.setText(null);
-        signBox.setText("ln");
-        hasDot = false;
-    }
-
-    public void btnClick_power(View view) {
-        sign = "power";
-        value1 = input.getText().toString();
-        input.setText(null);
-        hasDot = false;
-        signBox.setText("xⁿ");
-    }
-
-    public void btnClick_factorial(View view) {
-        sign = "factorial";
-        input.setText(null);
-        hasDot = false;
-        signBox.setText("!");
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void btnClick_sin(View view) {
-        sign = "sin";
-        input.setText(null);
-        hasDot = false;
-        signBox.setText("sin");
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void btnClick_cos(View view) {
-        sign = "cos";
-        input.setText(null);
-        hasDot = false;
-        signBox.setText("cos");
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void btnClick_tan(View view) {
-        sign = "tan";
-        input.setText(null);
-        hasDot = false;
-        signBox.setText("tan");
-    }
-
-    public void btnClick_root(View view) {
-        sign = "root";
-        input.setText(null);
-        hasDot = false;
-        signBox.setText("√");
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void btnClick_percent(View view) {
-        sign = "percent";
-        hasDot = false;
-        signBox.setText("%");
-        try {
-            float result1 = Float.parseFloat(signBox.getText() + "");
-            result1 = result1 / 100;
-            signBox.setText("");
-            input.setText(result1 + "");
-            input2.setText(input2.getText() + "%");
-        }
-        catch(NumberFormatException e){
-            signBox.setText("Error");
-            input.setText("");
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void btnClick_rad(View view) {
-        sign = "radians";
-        hasDot = false;
-        signBox.setText("rad");
-        try {
-            float degrees = Float.parseFloat(signBox.getText() + "");
-            double radians = Math.toRadians(degrees);
-            result1 = (float) Math.sin(radians);
-            signBox.setText("" + result1);
-            input.setText("sin(" + degrees + ") = " + result1);
-        }
-        catch(NumberFormatException e){
-            signBox.setText("Error");
-            input.setText("");
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void btnClick_equal(View view) {
-        if (sign == null) {
-            signBox.setText("Error!");
-        } else if (input.getText().equals("")) {
-            signBox.setText("Error!");
-        } else if ((sign.equals("+") || sign.equals("-") || sign.equals("*") || sign.equals("/")) && value1.equals("")) {
-            signBox.setText("Error!");
-        } else {
-            switch (sign) {
-                default:
-                    break;
-                case "log":
-                    value1 = input.getText().toString();
-                    num1 = Double.parseDouble(value1);
-                    input.setText(Math.log10(num1) + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "ln":
-                    value1 = input.getText().toString();
-                    num1 = Double.parseDouble(value1);
-                    input.setText(Math.log(num1) + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "power":
-                    num1 = Double.parseDouble((value1));
-                    value2 = input.getText().toString();
-                    num2 = Double.parseDouble(value2);
-                    input.setText(Math.pow(num1, num2) + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "root":
-                    value1 = input.getText().toString();
-                    num1 = Double.parseDouble((value1));
-                    input.setText(Math.sqrt(num1) + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "factorial":
-                    value1 = input.getText().toString();
-                    num1 = Double.parseDouble((value1));
-                    int i = Integer.parseInt(value1) - 1;
-
-                    while (i > 0) {
-                        num1 = num1 * i;
-                        i--;
+            case R.id.backSpace:
+                text=e2.getText().toString();
+                if(text.length()>0)
+                {
+                    if(text.endsWith("."))
+                    {
+                        count=0;
                     }
+                    String newText=text.substring(0,text.length()-1);
+                    //to delete the data contained in the brackets at once
+                    if(text.endsWith(")"))
+                    {
+                        char []a=text.toCharArray();
+                        int pos=a.length-2;
+                        int counter=1;
+                        //to find the opening bracket position
+                        for(int i=a.length-2;i>=0;i--)
+                        {
+                            if(a[i]==')')
+                            {
+                                counter++;
+                            }
+                            else if(a[i]=='(')
+                            {
+                                counter--;
+                            }
+                            //if decimal is deleted b/w brackets then count should be zero
+                            else if(a[i]=='.')
+                            {
+                                count=0;
+                            }
+                            //if opening bracket pair for the last bracket is found
+                            if(counter==0)
+                            {
+                                pos=i;
+                                break;
+                            }
+                        }
+                        newText=text.substring(0,pos);
+                    }
+                    //if e2 edit text contains only - sign or sqrt or any other text functions
+                    // at last then clear the edit text e2
+                    if(newText.equals("-")||newText.endsWith("sqrt")||newText.endsWith("log")||newText.endsWith("ln")
+                            ||newText.endsWith("sin")||newText.endsWith("asin")||newText.endsWith("asind")||newText.endsWith("sinh")
+                            ||newText.endsWith("cos")||newText.endsWith("acos")||newText.endsWith("acosd")||newText.endsWith("cosh")
+                            ||newText.endsWith("tan")||newText.endsWith("atan")||newText.endsWith("atand")||newText.endsWith("tanh")
+                            ||newText.endsWith("cbrt"))
+                    {
+                        newText="";
+                    }
+                    //if pow sign is left at the last or divide sign
+                    else if(newText.endsWith("^")||newText.endsWith("/"))
+                        newText=newText.substring(0,newText.length()-1);
+                    else if(newText.endsWith("pi")||newText.endsWith("e^"))
+                        newText=newText.substring(0,newText.length()-2);
+                    e2.setText(newText);
+                }
+                break;
 
-                    input.setText(num1 + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "sin":
-                    value1 = input.getText().toString();
-                    num1 = Double.parseDouble((value1));
-                    input.setText(Math.sin(num1) + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "cos":
-                    value1 = input.getText().toString();
-                    num1 = Double.parseDouble((value1));
-                    input.setText(Math.cos(num1) + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "tan":
-                    value1 = input.getText().toString();
-                    num1 = Double.parseDouble((value1));
-                    input.setText(Math.tan(num1) + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "+":
-                    value2 = input.getText().toString();
-                    num1 = Double.parseDouble(value1);
-                    num2 = Double.parseDouble(value2);
-                    result = num1 + num2;
-                    input.setText(result + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "-":
-                    value2 = input.getText().toString();
-                    num1 = Double.parseDouble(value1);
-                    num2 = Double.parseDouble(value2);
-                    result = num1 - num2;
-                    input.setText(result + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "*":
-                    value2 = input.getText().toString();
-                    num1 = Double.parseDouble(value1);
-                    num2 = Double.parseDouble(value2);
-                    result = num1 * num2;
-                    input.setText(result + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-                case "/":
-                    value2 = input.getText().toString();
-                    num1 = Double.parseDouble(value1);
-                    num2 = Double.parseDouble(value2);
-                    result = num1 / num2;
-                    input.setText(result + "");
-                    sign = null;
-                    signBox.setText(null);
-                    break;
-            }
+            case R.id.plus:
+                operationClicked("+");
+                break;
 
+            case R.id.minus:
+                operationClicked("-");
+                break;
+
+            case R.id.divide:
+                operationClicked("/");
+                break;
+
+            case R.id.multiply:
+                operationClicked("*");
+                break;
+
+            case R.id.sqrt:
+                if (e2.length() != 0) {
+                    text = e2.getText().toString();
+                    toggleMode=(int)toggle.getTag();
+                    if(toggleMode==1)
+                        e2.setText("sqrt(" + text + ")");
+                    else if(toggleMode==2)
+                        e2.setText("cbrt(" + text + ")");
+                    else
+                        e2.setText("1/(" + text + ")");
+                }
+                break;
+
+            case R.id.square:
+                if (e2.length() != 0) {
+                    text = e2.getText().toString();
+                    if(toggleMode==2)
+                        e2.setText("(" + text + ")^3");
+                    else
+                        e2.setText("(" + text + ")^2");
+                }
+                break;
+
+            case R.id.xpowy:
+                if (e2.length() != 0) {
+                    text = e2.getText().toString();
+                    if(toggleMode==1)
+                        e2.setText("(" + text + ")^");
+                    else if(toggleMode==2)
+                        e2.setText("10^(" + text + ")");
+                    else
+                        e2.setText("e^(" + text + ")");
+                }
+                break;
+
+            case R.id.log:
+                if (e2.length() != 0) {
+                    text = e2.getText().toString();
+                    if(toggleMode==2)
+                        e2.setText("ln(" + text + ")");
+                    else
+                        e2.setText("log(" + text + ")");
+                }
+                break;
+
+            case R.id.factorial:
+                if (e2.length() != 0) {
+                    text = e2.getText().toString();
+                    if(toggleMode==2)
+                    {
+                        e1.setText("(" + text + ")%");
+                        e2.setText("");
+                    }
+                    else
+                    {
+                        String res="";
+                        try
+                        {
+                            CalculateFactorial cf=new CalculateFactorial();
+                            int []arr=cf.factorial((int)Double.parseDouble(String.valueOf(new ExtendedDoubleEvaluator().evaluate(text))));
+                            int res_size=cf.getRes();
+                            if(res_size>20)
+                            {
+                                for (int i=res_size-1; i>=res_size-20; i--)
+                                {
+                                    if(i==res_size-2)
+                                        res+=".";
+                                    res+=arr[i];
+                                }
+                                res+="E"+(res_size-1);
+                            }
+                            else
+                            {
+                                for (int i=res_size-1; i>=0; i--)
+                                {
+                                    res+=arr[i];
+                                }
+                            }
+                            e2.setText(res);
+                        }
+                        catch (Exception e)
+                        {
+                            if(e.toString().contains("ArrayIndexOutOfBoundsException"))
+                            {
+                                e2.setText("Result too big!");
+                            }
+                            else
+                                e2.setText("Invalid!!");
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                break;
+
+            case R.id.sin:
+                if (e2.length() != 0) {
+                    text = e2.getText().toString();
+                    if(angleMode==1)
+                    {
+                        double angle=Math.toRadians(new ExtendedDoubleEvaluator().evaluate(text));
+                        if(toggleMode==1)
+                            e2.setText("sin(" + angle + ")");
+                        else if(toggleMode==2)
+                            e2.setText("asind(" + text + ")");
+                        else
+                            e2.setText("sinh(" + text + ")");
+                    }
+                    else
+                    {
+                        if(toggleMode==1)
+                            e2.setText("sin(" + text + ")");
+                        else if(toggleMode==2)
+                            e2.setText("asin(" + text + ")");
+                        else
+                            e2.setText("sinh(" + text + ")");
+                    }
+                }
+                break;
+
+            case R.id.cos:
+                if (e2.length() != 0) {
+                    text = e2.getText().toString();
+                    if(angleMode==1)
+                    {
+                        double angle=Math.toRadians(new ExtendedDoubleEvaluator().evaluate(text));
+                        if(toggleMode==1)
+                            e2.setText("cos(" + angle + ")");
+                        else if(toggleMode==2)
+                            e2.setText("acosd(" + text + ")");
+                        else
+                            e2.setText("cosh(" + text + ")");
+                    }
+                    else
+                    {
+                        if(toggleMode==1)
+                            e2.setText("cos(" + text + ")");
+                        else if(toggleMode==2)
+                            e2.setText("acos(" + text + ")");
+                        else
+                            e2.setText("cosh(" + text + ")");
+                    }
+                }
+                break;
+
+            case R.id.tan:
+                if (e2.length() != 0) {
+                    text = e2.getText().toString();
+                    if(angleMode==1)
+                    {
+                        double angle=Math.toRadians(new ExtendedDoubleEvaluator().evaluate(text));
+                        if(toggleMode==1)
+                            e2.setText("tan(" + angle + ")");
+                        else if(toggleMode==2)
+                            e2.setText("atand(" + text + ")");
+                        else
+                            e2.setText("tanh(" + text + ")");
+                    }
+                    else
+                    {
+                        if(toggleMode==1)
+                            e2.setText("tan(" + text + ")");
+                        else if(toggleMode==2)
+                            e2.setText("atan(" + text + ")");
+                        else
+                            e2.setText("tanh(" + text + ")");
+                    }
+                }
+                break;
+
+            case R.id.posneg:
+                if (e2.length() != 0) {
+                    String s = e2.getText().toString();
+                    char arr[] = s.toCharArray();
+                    if (arr[0] == '-')
+                        e2.setText(s.substring(1, s.length()));
+                    else
+                        e2.setText("-" + s);
+                }
+                break;
+
+            case R.id.equal:
+                /*for more knowledge on DoubleEvaluator and its tutorial go to the below link
+                http://javaluator.sourceforge.net/en/home/*/
+                if (e2.length() != 0) {
+                    text = e2.getText().toString();
+                    expression = e1.getText().toString() + text;
+                }
+                e1.setText("");
+                if (expression.length() == 0)
+                    expression = "0.0";
+                try {
+                    //evaluate the expression
+                    result = new ExtendedDoubleEvaluator().evaluate(expression);
+                    //insert expression and result in sqlite database if expression is valid and not 0.0
+                    if (String.valueOf(result).equals("6.123233995736766E-17"))
+                    {
+                        result=0.0;
+                        e2.setText(result + "");
+                    }
+                    else if(String.valueOf(result).equals("1.633123935319537E16"))
+                        e2.setText("infinity");
+                    else
+                        e2.setText(result + "");
+                    if (!expression.equals("0.0"))
+                        dbHelper.insert("SCIENTIFIC", expression + " = " + result);
+                } catch (Exception e) {
+                    e2.setText("Invalid Expression");
+                    e1.setText("");
+                    expression = "";
+                    e.printStackTrace();
+                }
+                break;
+
+            case R.id.openBracket:
+                e1.setText(e1.getText() + "(");
+                break;
+
+            case R.id.closeBracket:
+                if(e2.length()!=0)
+                    e1.setText(e1.getText() +e2.getText().toString()+ ")");
+                else
+                    e1.setText(e1.getText() + ")");
+                break;
         }
     }
 
-
-    public void btnClick_delete(View view) {
-        if (input.getText().equals("")) {
-            input.setText(null);
+    private void operationClicked(String op) {
+        if (e2.length() != 0) {
+            String text = e2.getText().toString();
+            e1.setText(e1.getText() + text + op);
+            e2.setText("");
+            count = 0;
         } else {
-            int len = input.getText().length();
-            String s = input.getText().toString();
-            if (s.charAt(len - 1) == '.') {
-                hasDot = false;
-                input.setText(input.getText().subSequence(0, input.getText().length() - 1));
-
-            } else {
-                input.setText(input.getText().subSequence(0, input.getText().length() - 1));
+            String text = e1.getText().toString();
+            if (text.length() > 0) {
+                String newText = text.substring(0, text.length() - 1) + op;
+                e1.setText(newText);
             }
         }
     }
-
-    public void btnClick_clear(View view) {
-
-        input.setText(null);
-        signBox.setText(null);
-        value1 = null;
-        value2 = null;
-        sign = null;
-        hasDot = false;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -384,17 +492,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menu1:
-                MenuFragment menuFragment = new MenuFragment();
-                FragmentManager mFragmentManager = getSupportFragmentManager();
-                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.fragment_container, menuFragment);
-                mFragmentTransaction.addToBackStack(null);
-                mFragmentTransaction.commit();
-
+                Intent o = new Intent(MainActivity.this,History1.class);
+                o.putExtra("calcName", "SCIENTIFIC");
+                startActivity(o);
                 return true;
             case R.id.menu2:
-                Intent i = new Intent(this,MenuActivity1.class);
+                Intent i = new Intent(MainActivity.this,MenuActivity1.class);
                 startActivity(i);
+                return true;
+            case R.id.menu3:
+                Intent j = new Intent(MainActivity.this,UnitArea.class);
+                startActivity(j);
                 return true;
             default:
                 return true;

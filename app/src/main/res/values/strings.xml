@@ -26,10 +26,37 @@
     <string name="bagi">÷</string>
     <string name="samadengan">=</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hello_history">hello_history</string>
-    <string name="_0">0</string>
-    <string name="log">log</string>
+    <string name="action_settings">Settings</string>
+    <string name="stdCal">Standard Calculator</string>
+    <string name="sciCal">Scientific Calculator</string>
+    <string name="unitCal">Unit Converter</string>
+    <string name="FullCal">Calculator App</string>
+    <string name="title_activity_standard_cal">StandardCal</string>
+    <string name="title_activity_scientific_cal">ScientificCal</string>
+    <string name="title_activity_unit_coverter">UnitCoverter</string>
+    <string name="clear">C</string>
+    <string name="backspace">⌫</string>
+    <string name="divide">÷</string>
+    <string name="sqrt">√</string>
+    <string name="cuberoot">\u221B</string>
+    <string name="square">x²</string>
+    <string name="cube">x\u00B3</string>
+    <string name="tenpow">10\u207F</string>
+    <string name="sininv">sin\u207B\u00B9</string>
+    <string name="cosinv">cos\u207B\u00B9</string>
+    <string name="taninv">tan\u207B\u00B9</string>
+    <string name="posneg">±</string>
+    <string name="arrow">↑</string>
+    <string name="xpown">xⁿ</string>
+    <string name="epown">eⁿ</string>
+    <string name="pi">π</string>
+    <string name="title_activity_unit_area">UnitArea</string>
+    <string name="title_activity_unit_length">UnitLength</string>
+    <string name="title_activity_unit_weight">UnitWeight</string>
+    <string name="title_activity_unit_temperature">UnitTemperature</string>
+    <string name="openBracket">(</string>
+    <string name="closeBracket">)</string>
+    <string name="history">History</string>
     <string-array name="suhu">
         <item>Celcius ---> Reamur</item>
         <item>Celcius ---> Fahrenheit</item>
@@ -43,5 +70,26 @@
         <item>Kelvin ---> Celcius</item>
         <item>Kelvin ---> Reamur</item>
         <item>Kelvin ---> Fahrenheit</item>
+    </string-array>
+    <string name="title_activity_history">History</string>
+    <string name="deleteHistory">Delete History</string>
+    <string name="mode1">Degree</string>
+    <string name="mode2">Radian</string>
+    <string name="toggle">SWITCH</string>
+    <string name="naturalLog">ln</string>
+    <string name="hyperbolicSine">sinh</string>
+    <string name="hyperbolicCosine">cosh</string>
+    <string name="hyperbolicTan">tanh</string>
+    <string name="log">log</string>
+    <string name="Mod">%</string>
+    <string name="inverse">1/x</string>
+    <string name="factorial">x!</string>>
+    <string-array name="area">
+        <item>Sq. Millimeter</item>
+        <item>Sq. Centimeter</item>
+        <item>Sq Meter</item>
+        <item>Sq. Kilometer</item>
+        <item>Acre</item>
+        <item>Hectare</item>
     </string-array>
 </resources>
